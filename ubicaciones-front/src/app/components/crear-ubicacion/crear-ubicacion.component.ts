@@ -12,4 +12,8 @@ export class CrearUbicacionComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  agregarUbicacion(){
+    console.log("Cintia no te golpees")
+  }
+
 }
