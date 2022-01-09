@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-crear-ubicacion',
@@ -6,8 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./crear-ubicacion.component.css']
 })
 export class CrearUbicacionComponent implements OnInit {
+  ubicacionForm: FormGroup;
 
-  constructor() { }
+  constructor(private fb: FormBuilder) {
+    this.ubicacionForm = this.fb.group({
+      rubro: ['', Validators.required],
+      direccion: ['', Validators.required],
+      localidad: ['', Validators.required]
+    })
+  }
 
   ngOnInit(): void {
   }
@@ -15,5 +23,7 @@ export class CrearUbicacionComponent implements OnInit {
   agregarUbicacion(){
     console.log("Cintia no te golpees")
   }
+
+  /*validacionCamposFormulario(){}*/
 
 }

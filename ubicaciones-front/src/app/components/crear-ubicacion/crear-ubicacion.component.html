@@ -4,26 +4,35 @@
             <div class="card rounded-pill">
                 <div class="card-body">
                     <div class="mb-3 text-center h3 titulo">ALTA DE UBICACIONES</div>
-                    <form (ngsubmit)="agregarUbicacion()">
+                    <form [formGroup]="ubicacionForm" (ngSubmit)="agregarUbicacion()">
                         <div class="row mb-3">
                           <div class="col-sm-10 mx-auto">
-                            <input id="rubro" class="form-control" placeholder="Rubro">
+                            <input id="rubro" class="form-control" formControlName="rubro" placeholder="Rubro">
+                          </div>
+                          <div class="text-danger" *ngIf="ubicacionForm.get('rubro')?.hasError('required') && ubicacionForm.get('rubro')?.touched">
+                            <span><b>* El rubro es obligatoria</b></span>
                           </div>
                         </div>
                         <div class="row mb-3">
                           <div class="col-sm-10 mx-auto">
-                            <input id="direccion" class="form-control" placeholder="Direccion">
+                            <input id="direccion" class="form-control" formControlName="direccion" placeholder="Direccion">
+                          </div>
+                          <div class="text-danger" *ngIf="ubicacionForm.get('direccion')?.hasError('required') && ubicacionForm.get('direccion')?.touched">
+                            <span><b>* La dirección es obligatoria</b></span>
                           </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-sm-10 mx-auto">
-                              <input id="localidad" class="form-control" placeholder="Localidad">
+                              <input id="localidad" class="form-control" formControlName="localidad" placeholder="Localidad">
+                            </div>
+                            <div class="text-danger" *ngIf="ubicacionForm.get('localidad')?.hasError('required') && ubicacionForm.get('localidad')?.touched">
+                              <span><b>* La localidad es obligatoria</b></span>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-sm-10 mx-auto">
                                 <button routerLink="/" class="btn btn-primary float-start rounded-pill">VOLVER</button>
-                                <button class="btn btn-primary float-end rounded-pill" type="submit">INGRESAR</button>
+                                <button class="btn btn-primary float-end rounded-pill" [disabled]="ubicacionForm.invalid" type="submit">INGRESAR</button>
                             </div>
                         </div>
                     </form>
