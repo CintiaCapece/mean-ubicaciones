@@ -11,6 +11,7 @@
                             <th scope="col">Rubro</th>
                             <th scope="col">Direccion</th>
                             <th scope="col">Localidad</th>
+                            <th scope="col"> </th>
                         </tr>
                         </thead>
                         <tbody>
@@ -19,6 +20,10 @@
                             <td>{{ubicacion.rubro}}</td>
                             <td>{{ubicacion.direccion}}</td>
                             <td>{{ubicacion.localidad}}</td>
+                            <td>
+                                <i [routerLink]="['/editar-ubicacion', ubicacion._id]" class="fas fa-edit text-primary"></i>
+                                <i (click)="eliminarUbicacion(ubicacion._id)" class="fas fa-trash text-danger mx-2"></i>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
