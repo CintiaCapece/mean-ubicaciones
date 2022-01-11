@@ -4,7 +4,7 @@ import { CrearUbicacionComponent } from './components/crear-ubicacion/crear-ubic
 import { ListarUbicacionComponent } from './components/listar-ubicacion/listar-ubicacion.component';
 
 const routes: Routes = [
-  { path: '', component: CrearUbicacionComponent },
+  { path: '', component: ListarUbicacionComponent },
   { path: 'crear-ubicacion', component: CrearUbicacionComponent },
   { path: 'editar-ubicacion/:id', component: CrearUbicacionComponent },
   { path: 'listar-ubicacion', component: ListarUbicacionComponent },
