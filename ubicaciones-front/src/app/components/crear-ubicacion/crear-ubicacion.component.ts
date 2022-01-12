@@ -13,6 +13,7 @@ import { UbicacionService } from 'src/app/services/ubicacion.service';
 export class CrearUbicacionComponent implements OnInit {
   ubicacionForm: FormGroup;
   titulo = "Alta Ubicacion";
+  boton = "INGRESAR";
   id: string | null;
 
   constructor(private fb: FormBuilder, private router: Router, private toastr: ToastrService, private _ubicacionService: UbicacionService,
@@ -26,6 +27,7 @@ export class CrearUbicacionComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.esEditar();
   }
 
   agregarUbicacion(){
@@ -58,6 +60,7 @@ export class CrearUbicacionComponent implements OnInit {
   esEditar(){
     if(this.id !== null){
       this.titulo = 'Editar Ubicacion';
+      this.boton = 'MODIFICAR';
       this._ubicacionService.obtenerUbicacion(this.id).subscribe(data => {
         this.ubicacionForm.setValue({
           rubro: data.rubro,
