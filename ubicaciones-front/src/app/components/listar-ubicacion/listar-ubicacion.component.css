@@ -1,0 +1,13 @@
+#listar-ubicaciones {
+  counter-reset: rowNumber-1;
+}
+  
+#listar-ubicaciones tr {
+  counter-increment: rowNumber;
+}
+  
+#listar-ubicaciones tr td:first-child::before {
+   content: counter(rowNumber);
+   min-width: 1em;
+   margin-right: 0.5em;
+}

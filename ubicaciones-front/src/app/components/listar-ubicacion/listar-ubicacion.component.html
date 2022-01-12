@@ -4,19 +4,19 @@
             <div class="card">
                 <div class="card-body">
                     <button class="btn btn-primary float-end" routerLink="/crear-ubicacion">NUEVA</button>
-                    <table *ngIf="listUbicaciones.length>0" class="table">
+                    <table id="listar-ubicaciones" *ngIf="listUbicaciones.length>0" class="table">
                         <thead>
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Rubro</th>
-                            <th scope="col">Direccion</th>
+                            <th scope="col">Dirección</th>
                             <th scope="col">Localidad</th>
-                            <th scope="col"> </th>
+                            <th scope="col">Acciones</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr *ngFor="let ubicacion of listUbicaciones">
-                            <th scope="row">1</th>
+                            <td class="h5"></td>
                             <td>{{ubicacion.rubro}}</td>
                             <td>{{ubicacion.direccion}}</td>
                             <td>{{ubicacion.localidad}}</td>
