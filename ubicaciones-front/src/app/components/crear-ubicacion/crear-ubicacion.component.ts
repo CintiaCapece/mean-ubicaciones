@@ -15,6 +15,8 @@ export class CrearUbicacionComponent implements OnInit {
   titulo = "Alta Ubicacion";
   boton = "INGRESAR";
   id: string | null;
+  mensaje: string;
+  titulo_mensaje: string;
 
   constructor(private fb: FormBuilder, private router: Router, private toastr: ToastrService, private _ubicacionService: UbicacionService,
     private aRouter: ActivatedRoute) {
@@ -24,54 +26,88 @@ export class CrearUbicacionComponent implements OnInit {
       localidad: ['', Validators.required]
     })
     this.id = this.aRouter.snapshot.paramMap.get('id');
+    this.mensaje = " ";
+    this.titulo_mensaje = " ";
   }
 
   ngOnInit(): void {
-    this.esEditar();
   }
 
-  agregarUbicacion(){
+  procesarUbicacion(id: string | null){
     const UBICACION: Ubicacion = {
       rubro: this.ubicacionForm.get('rubro')?.value,
       direccion: this.ubicacionForm.get('direccion')?.value,
       localidad: this.ubicacionForm.get('localidad')?.value
     }
 
-    if(this.id !== null){
-      this._ubicacionService.editarUbicacion(this.id,UBICACION).subscribe(data => {
-        this.toastr.info('La ubicación fue actualizada con éxito!', 'Ubicación actualizada!');
-        this.router.navigate(['/']);
-      }, error => {
-        console.log(error);
-        this.ubicacionForm.reset();
-      })
-    } else{
-      this._ubicacionService.guardarUbicacion(UBICACION).subscribe(data => {
-        this.toastr.success('La ubicación fue registrada con éxito!', 'Ubicación registrada!');
-        this.router.navigate(['/']);
-      }, error => {
-        console.log(error);
-        this.ubicacionForm.reset();
-      })
+    if(this.esEditar(id)){
+      this.editarUbicacion(UBICACION);
+    }else{
+      this.agregarUbicacion(UBICACION);
     }
+  }
+
+  agregarUbicacion(ubicacion: Ubicacion){
+    this._ubicacionService.guardarUbicacion(ubicacion).subscribe(data => {
+      this.mensaje = 'La ubicación fue registrada con éxito!';
+      this.titulo_mensaje = 'Ubicación registrada!';
+      this.toastr.success(this.mensaje, this.titulo_mensaje);
+      this.router.navigate(['/']);
+    }, error => {
+      this.mensaje = error;
+      this.titulo_mensaje = 'Upps! Ocurrio un error';
+      this.toastr.error(this.mensaje, this.titulo_mensaje);
+      this.ubicacionForm.reset();
+    })
  
   }
 
-  esEditar(){
-    if(this.id !== null){
-      this.titulo = 'Editar Ubicacion';
-      this.boton = 'MODIFICAR';
-      this._ubicacionService.obtenerUbicacion(this.id).subscribe(data => {
-        this.ubicacionForm.setValue({
-          rubro: data.rubro,
-          direccion: data.direccion,
-          localidad: data.localidad
-        })
-      }, error => {
-        console.log(error);
-        this.ubicacionForm.reset();
-      })
+  editarUbicacion(ubicacion: Ubicacion){
+    const id = this.id || "1";
+    this.titulo = 'Editar Ubicacion';
+    this.boton = 'MODIFICAR';
+    this.obtenerUbicacionSeleccionada(id)
+    this._ubicacionService.editarUbicacion(id,ubicacion).subscribe(data => {
+      this.mensaje = 'La ubicación fue actualizada con éxito!';
+      this.titulo_mensaje = 'Ubicación actualizada!';
+      this.toastr.info(this.mensaje, this.titulo_mensaje);
+      this.router.navigate(['/']);
+    }, error => {
+      this.mensaje = error;
+      this.titulo_mensaje = 'Upps! Ocurrio un error';
+      this.toastr.error(this.mensaje, this.titulo_mensaje);
+      this.ubicacionForm.reset();
+    })
+  }
+
+  esEditar(id: string | null): boolean{
+    return id !== null;
+  }
+
+  obtenerUbicacionSeleccionada(id: string): Ubicacion {
+    let UBICACION: Ubicacion = {
+      rubro: " ",
+      direccion: " ",
+      localidad: " "
     }
+    this._ubicacionService.obtenerUbicacion(id).subscribe(data => {
+      UBICACION.rubro= data.rubro,
+      UBICACION.direccion= data.direccion,
+      UBICACION.localidad= data.localidad
+
+      this.ubicacionForm.setValue({
+        rubro: data.rubro,
+        direccion: data.direccion,
+        localidad: data.localidad
+      })
+    }, error => {
+      this.mensaje = error;
+      this.titulo_mensaje = 'Upps! Ocurrio un error';
+      this.toastr.error(this.mensaje, this.titulo_mensaje);
+      this.ubicacionForm.reset();
+    })
+    return UBICACION;
+
   }
 
   /*validacionCamposFormulario(){}*/

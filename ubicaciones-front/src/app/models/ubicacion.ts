@@ -1,5 +1,5 @@
 export class Ubicacion {
-    _id?: number;
+    _id?: string;
     rubro: string;
     direccion: string;
     localidad: string;
