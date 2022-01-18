@@ -62,16 +62,6 @@ describe('Testing CrearUbicacionComponent', () => {
     expect(component.ubicacionForm.invalid).toBeTrue();
   });
 
-  it('Si id no es nulo, esEditar me devuelve True', () => {
-    component.id = "3";
-    expect(component.esEditar(component.id)).toBeTrue();
-  });
-
-  it('Si id es nulo, esEditar me devuelve False', () => {
-    component.id = null;
-    expect(component.esEditar(component.id)).toBeFalse();
-  });
-
  it('Debe devolver la Ubicacion que tiene el ID 3', () => {
     const newUbicacion: Ubicacion = {rubro:'LICORERIA',direccion:'Calle Falsa 123',localidad:'Las Toninas',_id: "3"};
 
@@ -84,43 +74,52 @@ describe('Testing CrearUbicacionComponent', () => {
     expect(ubicacionAgregada.localidad).toBe(newUbicacion.localidad);
   });
 
-  /*it('Debe devolver error si el ID 3 no tiene ubicacion asociada', () => {
-    const mensaje_error = "Error";
-
-    ubicacionHttpSpy.obtenerUbicacion.and.throwError(mensaje_error);
-
-    //component.obtenerUbicacionSeleccionada("3");
-
-    expect(component.obtenerUbicacionSeleccionada("3")).toThrowError(mensaje_error);
-    //expect(component.titulo_mensaje).toEqual('Upps! Ocurrio un error');
-  });
-
-   it('Debe devolver OK si se completan los campos obligatorios aaayyy', () => {
-    fixture.detectChanges();
-
-    const rubro = component.ubicacionForm.controls['rubro']
-    const direccion = component.ubicacionForm.controls['direccion']
-    const localidad = component.ubicacionForm.controls['localidad']
-    rubro.setValue('LICORERIA')
-    direccion.setValue('Calle Falsa 123')
-    localidad.setValue('Las Toninas')
-
-    const newUbicacion: Ubicacion = {rubro:rubro.value,direccion:direccion.value,localidad:localidad.value,fechaCreacion:"2022-01-16T18:56:55.920Z",id:"3"};
+  it('Debe devolver mensaje de que se agrego la ubicacion cuando se agrega una nueva', () => {
+    const newUbicacion: Ubicacion = {rubro:'LICORERIA',direccion:'Calle Falsa 123',localidad:'Las Toninas'};
 
     ubicacionHttpSpy.guardarUbicacion.and.returnValue(of(newUbicacion));
 
-    component.agregarUbicacion();
+    component.agregarUbicacion(newUbicacion);
 
-    newUbicacion.localidad = "Caseros";
+    expect(component.titulo_mensaje).toEqual('Ubicación registrada!');
+    expect(component.mensaje).toEqual('La ubicación fue registrada con éxito!');
+  });
 
-    ubicacionHttpSpy.editarUbicacion.and.returnValue(of(newUbicacion));
-    
-    component.id = '3';
-    component.agregarUbicacion();
+  it('Debe devolver mensaje de que se actualizo la ubicacion cuando se pasa un id y se modifica', () => {
+    const actualizaUbicacion: Ubicacion = {rubro:'LICORERIA',direccion:'Calle Falsa 123',localidad:'Las Toninas',_id: "3"};
 
-    component.obtenerUbicacionSeleccionada(component.id);
-    
-    expect(component.UBICACION).toBe(newUbicacion);
-  });*/
+    ubicacionHttpSpy.editarUbicacion.and.returnValue(of(actualizaUbicacion));
+
+    component.id = "3";
+    component.editarUbicacion(actualizaUbicacion);
+
+    expect(component.titulo_mensaje).toEqual('Ubicación actualizada!');
+    expect(component.mensaje).toEqual('La ubicación fue actualizada con éxito!');
+  });
+
+  it('Debe devolver error de que no se reconocio el id dentro del editarUbicacion', () => {
+    const actualizaUbicacion: Ubicacion = {rubro:'LICORERIA',direccion:'Calle Falsa 123',localidad:'Las Toninas',_id: "3"};
+    component.id = null;
+    component.editarUbicacion(actualizaUbicacion);
+
+    expect(component.titulo_mensaje).toEqual('Upps! Ocurrio un error');
+    expect(component.mensaje).toEqual('No se reconoce la ubicacion');
+  });
+
+  it('Si id no es nulo, debe llamar al servicio de editarUbicacion', () => {
+    component.id = "3";
+    const actualizaUbicacion: Ubicacion = {rubro:'LICORERIA',direccion:'Calle Falsa 123',localidad:'Las Toninas',_id: "3"};
+    ubicacionHttpSpy.editarUbicacion.and.returnValue(of(actualizaUbicacion));
+    component.procesarUbicacion(component.id);
+    expect(ubicacionHttpSpy.editarUbicacion).toHaveBeenCalled();
+  });
+
+  it('Si id es nulo, debe llamar al servicio de agregarUbicacion', () => {
+    component.id = null;
+    const newUbicacion: Ubicacion = {rubro:'LICORERIA',direccion:'Calle Falsa 123',localidad:'Las Toninas',_id: "3"};
+    ubicacionHttpSpy.guardarUbicacion.and.returnValue(of(newUbicacion));
+    component.procesarUbicacion(component.id);
+    expect(ubicacionHttpSpy.guardarUbicacion).toHaveBeenCalled();
+  });
 
 });

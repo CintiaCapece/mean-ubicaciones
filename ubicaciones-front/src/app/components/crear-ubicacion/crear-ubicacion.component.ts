@@ -17,6 +17,7 @@ export class CrearUbicacionComponent implements OnInit {
   id: string | null;
   mensaje: string;
   titulo_mensaje: string;
+  UBICACION: Ubicacion
 
   constructor(private fb: FormBuilder, private router: Router, private toastr: ToastrService, private _ubicacionService: UbicacionService,
     private aRouter: ActivatedRoute) {
@@ -28,22 +29,21 @@ export class CrearUbicacionComponent implements OnInit {
     this.id = this.aRouter.snapshot.paramMap.get('id');
     this.mensaje = " ";
     this.titulo_mensaje = " ";
+    this.UBICACION = {
+      rubro: this.ubicacionForm.controls['rubro'].value,
+      direccion: this.ubicacionForm.controls['direccion'].value,
+      localidad: this.ubicacionForm.controls['localidad'].value
+    }
   }
 
   ngOnInit(): void {
   }
 
   procesarUbicacion(id: string | null){
-    const UBICACION: Ubicacion = {
-      rubro: this.ubicacionForm.get('rubro')?.value,
-      direccion: this.ubicacionForm.get('direccion')?.value,
-      localidad: this.ubicacionForm.get('localidad')?.value
-    }
-
-    if(this.esEditar(id)){
-      this.editarUbicacion(UBICACION);
+    if(id !== null){
+      this.editarUbicacion(this.UBICACION);
     }else{
-      this.agregarUbicacion(UBICACION);
+      this.agregarUbicacion(this.UBICACION);
     }
   }
 
@@ -59,41 +59,42 @@ export class CrearUbicacionComponent implements OnInit {
       this.toastr.error(this.mensaje, this.titulo_mensaje);
       this.ubicacionForm.reset();
     })
- 
   }
 
   editarUbicacion(ubicacion: Ubicacion){
-    const id = this.id || "1";
-    this.titulo = 'Editar Ubicacion';
-    this.boton = 'MODIFICAR';
-    this.obtenerUbicacionSeleccionada(id)
-    this._ubicacionService.editarUbicacion(id,ubicacion).subscribe(data => {
-      this.mensaje = 'La ubicación fue actualizada con éxito!';
-      this.titulo_mensaje = 'Ubicación actualizada!';
-      this.toastr.info(this.mensaje, this.titulo_mensaje);
-      this.router.navigate(['/']);
-    }, error => {
-      this.mensaje = error;
+    if (this.id == null){
+      this.mensaje = 'No se reconoce la ubicacion';
       this.titulo_mensaje = 'Upps! Ocurrio un error';
       this.toastr.error(this.mensaje, this.titulo_mensaje);
       this.ubicacionForm.reset();
-    })
-  }
-
-  esEditar(id: string | null): boolean{
-    return id !== null;
+      this.router.navigate(['/']);
+    } else {
+      this.titulo = 'Editar Ubicacion';
+      this.boton = 'MODIFICAR';
+      this._ubicacionService.editarUbicacion(this.id,ubicacion).subscribe(data => {
+        this.mensaje = 'La ubicación fue actualizada con éxito!';
+        this.titulo_mensaje = 'Ubicación actualizada!';
+        this.toastr.info(this.mensaje, this.titulo_mensaje);
+        this.router.navigate(['/']);
+      }, error => {
+        this.mensaje = error;
+        this.titulo_mensaje = 'Upps! Ocurrio un error';
+        this.toastr.error(this.mensaje, this.titulo_mensaje);
+        this.ubicacionForm.reset();
+      })
+    }
   }
 
   obtenerUbicacionSeleccionada(id: string): Ubicacion {
-    let UBICACION: Ubicacion = {
+    let ubicacion: Ubicacion = {
       rubro: " ",
       direccion: " ",
       localidad: " "
     }
     this._ubicacionService.obtenerUbicacion(id).subscribe(data => {
-      UBICACION.rubro= data.rubro,
-      UBICACION.direccion= data.direccion,
-      UBICACION.localidad= data.localidad
+      ubicacion.rubro= data.rubro,
+      ubicacion.direccion= data.direccion,
+      ubicacion.localidad= data.localidad
 
       this.ubicacionForm.setValue({
         rubro: data.rubro,
@@ -106,8 +107,7 @@ export class CrearUbicacionComponent implements OnInit {
       this.toastr.error(this.mensaje, this.titulo_mensaje);
       this.ubicacionForm.reset();
     })
-    return UBICACION;
-
+    return ubicacion;
   }
 
   /*validacionCamposFormulario(){}*/
