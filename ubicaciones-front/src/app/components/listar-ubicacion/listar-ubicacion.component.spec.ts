@@ -4,7 +4,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { of } from 'rxjs/internal/observable/of';
 import { AppRoutingModule } from 'src/app/app-routing.module';
+import { Ubicacion } from 'src/app/models/ubicacion';
 import { UbicacionService } from 'src/app/services/ubicacion.service';
 
 import { ListarUbicacionComponent } from './listar-ubicacion.component';
@@ -36,4 +38,18 @@ describe('ListarUbicacionComponent', () => {
   it('La instancia de ListarUbicacionComponent debe crearse correctamente', () => {
     expect(component).toBeTruthy();
   });
+
+
+  it('Debe ser 1 la cantidad de ubicaciones ', () => {
+    const newUbicacion: Ubicacion = {rubro:'LICORERIA',direccion:'Calle Falsa 123',localidad:'Las Toninas',_id: "3"};
+
+    ubicacionHttpSpy.getUbicacion.and.returnValue(of([newUbicacion]));
+    component.obtenerUbicaciones();
+    component.listUbicaciones.length
+
+    expect(component.listUbicaciones.length).toBe(1);
+   // expect(ubicacionAgregada.direccion).toBe(newUbicacion.direccion);
+    //expect(ubicacionAgregada.localidad).toBe(newUbicacion.localidad);
+  });
+
 });
