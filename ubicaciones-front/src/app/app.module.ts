@@ -10,12 +10,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { CrearUbicacionComponent } from './components/crear-ubicacion/crear-ubicacion.component';
 import { ListarUbicacionComponent } from './components/listar-ubicacion/listar-ubicacion.component';
+import { MapaUbicacionComponent } from './components/mapa-ubicacion/mapa-ubicacion.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CrearUbicacionComponent,
-    ListarUbicacionComponent
+    ListarUbicacionComponent,
+    MapaUbicacionComponent
   ],
   imports: [
     BrowserModule,

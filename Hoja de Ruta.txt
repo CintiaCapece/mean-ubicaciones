@@ -1,9 +1,13 @@
-1. Agregar en el modelo ubicaciones los atributos latitud y longitud
+1. Agregar en el modelo ubicaciones los atributos latitud y longitud OK
 2. Agregar en el alta de Ubicaciones la obtencion de la latitud y la longitud segun la combinacion DIRECCION+LOCALIDAD
-3. Crear un nuevo componente llamado "mapa-ubicacion"
-4. Instalar las dependencias correspondientes para MapBox
+=> se unifica con la funcionalidad del item 8.
+3. Crear un nuevo componente llamado "mapa-ubicacion" OK
+4. Instalar las dependencias correspondientes para MapBox OK
 5. Crear un service asociado al componente mapa-ubicacion
 6. Agregar en el environment.ts, la key correspondiente al MapBox
+falta agregar al environment.ts
+
+tokenmapbox= pk.eyJ1IjoibGFjdWNpbmFkaW1yeCIsImEiOiJja3pobHF4emo0MzVyMm9tejBmZDdiNDRzIn0.c5Y9-LkTa1pggqjywXAk9g
 7. Integrar el MapBox a la aplicacion
 8. Dibujar en el MapBox todas las ubicaciones relacionadas en la coleccion Ubicaciones
 9. Agregar al lado del mapa el listado de ubicaciones que se muestran.
@@ -20,3 +24,4 @@ https://docs.mapbox.com/mapbox-gl-js/example/jump-to/
 https://www.youtube.com/watch?v=gdKWeboPxgY
 https://docs.mapbox.com/mapbox-gl-js/example/
 https://www.youtube.com/watch?v=v795GCDK86s (obtencion de lat y long)
+
