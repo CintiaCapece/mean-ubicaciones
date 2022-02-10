@@ -5,7 +5,7 @@ exports.crearUbicacion = async (req,res) => {
         let ubicacion;
 
         ubicacion = new Ubicacion(req.body); // Creamos la ubicacion
-
+ 
         await ubicacion.save();
         res.send(ubicacion);
 
@@ -28,7 +28,7 @@ exports.listarUbicaciones = async (req,res) => {
 
 exports.editarUbicacion = async (req,res) => {
     try {
-        const { rubro, direccion, localidad } = req.body;
+        const { rubro, direccion, localidad, latitud, longitud } = req.body;
         let ubicacion = await Ubicacion.findById(req.params.id);
 
         if(!ubicacion){ 
@@ -38,6 +38,8 @@ exports.editarUbicacion = async (req,res) => {
         ubicacion.rubro = rubro;
         ubicacion.direccion = direccion;
         ubicacion.localidad = localidad;
+        ubicacion.latitud = latitud;
+        ubicacion.longitud = longitud;
 
         ubicacion = await Ubicacion.findOneAndUpdate({_id: req.params.id}, ubicacion, { new: true})
         res.json(ubicacion);
