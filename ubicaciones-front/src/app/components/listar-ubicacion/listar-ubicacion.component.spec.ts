@@ -41,7 +41,7 @@ describe('ListarUbicacionComponent', () => {
 
 
   it('Debe ser 1 la cantidad de ubicaciones ', () => {
-    const newUbicacion: Ubicacion = {rubro:'LICORERIA',direccion:'Calle Falsa 123',localidad:'Las Toninas',_id: "3"};
+    const newUbicacion: Ubicacion = {rubro:'LICORERIA',nombre:'LICORERIA',direccion:'Calle Falsa 123',localidad:'Las Toninas',provincia:'Las Toninas',pais:'Las Toninas',_id: "3"};
 
     ubicacionHttpSpy.getUbicacion.and.returnValue(of([newUbicacion]));
     component.obtenerUbicaciones();

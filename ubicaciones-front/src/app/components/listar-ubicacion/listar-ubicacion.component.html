@@ -9,8 +9,11 @@
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Rubro</th>
+                            <th scope="col">Nombre</th>
                             <th scope="col">Dirección</th>
                             <th scope="col">Localidad</th>
+                            <th scope="col">Provincia</th>
+                            <th scope="col">Pais</th>
                             <th scope="col">Acciones</th>
                         </tr>
                         </thead>
@@ -18,8 +21,11 @@
                         <tr *ngFor="let ubicacion of listUbicaciones">
                             <td class="h5"></td>
                             <td>{{ubicacion.rubro}}</td>
+                            <td>{{ubicacion.nombre}}</td>
                             <td>{{ubicacion.direccion}}</td>
                             <td>{{ubicacion.localidad}}</td>
+                            <td>{{ubicacion.provincia}}</td>
+                            <td>{{ubicacion.pais}}</td>
                             <td>
                                 <i [routerLink]="['/editar-ubicacion', ubicacion._id]" class="fas fa-edit text-primary"></i>
                                 <i (click)="eliminarUbicacion(ubicacion._id)" class="fas fa-trash text-danger mx-2"></i>

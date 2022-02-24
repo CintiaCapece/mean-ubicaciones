@@ -23,24 +23,31 @@ export class CrearUbicacionComponent implements OnInit {
     private aRouter: ActivatedRoute) {
     this.ubicacionForm = this.fb.group({
       rubro: ['', Validators.required],
+      nombre: ['', Validators.required],
       direccion: ['', Validators.required],
-      localidad: ['', Validators.required]
+      localidad: ['', Validators.required],
+      provincia: ['', Validators.required],
+      pais: ['', Validators.required],
     })
-    this.id = this.aRouter.snapshot.paramMap.get('id');
     this.mensaje = " ";
     this.titulo_mensaje = " ";
+    this.id = null;
     this.UBICACION = {
       rubro: this.ubicacionForm.controls['rubro'].value,
+      nombre: this.ubicacionForm.controls['nombre'].value,
       direccion: this.ubicacionForm.controls['direccion'].value,
-      localidad: this.ubicacionForm.controls['localidad'].value
+      localidad: this.ubicacionForm.controls['localidad'].value,
+      provincia: this.ubicacionForm.controls['provincia'].value,
+      pais: this.ubicacionForm.controls['pais'].value,
     }
   }
 
   ngOnInit(): void {
   }
 
-  procesarUbicacion(id: string | null){
-    if(id !== null){
+  procesarUbicacion(){
+    this.id = this.aRouter.snapshot.paramMap.get('id');
+    if(this.id !== null){
       this.editarUbicacion(this.UBICACION);
     }else{
       this.agregarUbicacion(this.UBICACION);
@@ -88,18 +95,27 @@ export class CrearUbicacionComponent implements OnInit {
   obtenerUbicacionSeleccionada(id: string): Ubicacion {
     let ubicacion: Ubicacion = {
       rubro: " ",
+      nombre: " ",
       direccion: " ",
-      localidad: " "
+      localidad: " ",
+      provincia: " ",
+      pais: " "
     }
     this._ubicacionService.obtenerUbicacion(id).subscribe(data => {
       ubicacion.rubro= data.rubro,
+      ubicacion.nombre= data.nombre,
       ubicacion.direccion= data.direccion,
-      ubicacion.localidad= data.localidad
+      ubicacion.localidad= data.localidad,
+      ubicacion.provincia= data.provincia,
+      ubicacion.pais= data.pais
 
       this.ubicacionForm.setValue({
         rubro: data.rubro,
+        nombre: data.nombre,
         direccion: data.direccion,
-        localidad: data.localidad
+        localidad: data.localidad,
+        provincia: data.provincia,
+        pais: data.pais
       })
     }, error => {
       this.mensaje = error;

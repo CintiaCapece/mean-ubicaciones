@@ -28,7 +28,7 @@ exports.listarUbicaciones = async (req,res) => {
 
 exports.editarUbicacion = async (req,res) => {
     try {
-        const { rubro, direccion, localidad, latitud, longitud } = req.body;
+        const { rubro, nombre, direccion, localidad, provincia, pais, latitud, longitud } = req.body;
         let ubicacion = await Ubicacion.findById(req.params.id);
 
         if(!ubicacion){ 
@@ -36,8 +36,11 @@ exports.editarUbicacion = async (req,res) => {
         }
 
         ubicacion.rubro = rubro;
+        ubicacion.nombre = nombre;
         ubicacion.direccion = direccion;
         ubicacion.localidad = localidad;
+        ubicacion.provincia = provincia;
+        ubicacion.pais = pais;
         ubicacion.latitud = latitud;
         ubicacion.longitud = longitud;
 

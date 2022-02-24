@@ -15,6 +15,14 @@
                         </div>
                         <div class="row mb-3">
                           <div class="col-sm-10 mx-auto">
+                            <input id="nombre" class="form-control" formControlName="nombre" placeholder="Nombre">
+                          </div>
+                          <div class="text-danger" *ngIf="ubicacionForm.get('nombre')?.hasError('required') && ubicacionForm.get('nombre')?.touched">
+                            <span><b>* El nombre es obligatorio</b></span>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <div class="col-sm-10 mx-auto">
                             <input id="direccion" class="form-control" formControlName="direccion" placeholder="Direccion">
                           </div>
                           <div class="text-danger" *ngIf="ubicacionForm.get('direccion')?.hasError('required') && ubicacionForm.get('direccion')?.touched">
@@ -29,6 +37,22 @@
                               <span><b>* La localidad es obligatoria</b></span>
                             </div>
                         </div>
+                        <div class="row mb-3">
+                          <div class="col-sm-10 mx-auto">
+                            <input id="provincia" class="form-control" formControlName="provincia" placeholder="Provincia">
+                          </div>
+                          <div class="text-danger" *ngIf="ubicacionForm.get('provincia')?.hasError('required') && ubicacionForm.get('provincia')?.touched">
+                            <span><b>* La provincia es obligatoria</b></span>
+                          </div>
+                      </div>
+                      <div class="row mb-3">
+                        <div class="col-sm-10 mx-auto">
+                          <input id="pais" class="form-control" formControlName="pais" placeholder="Pais">
+                        </div>
+                        <div class="text-danger" *ngIf="ubicacionForm.get('pais')?.hasError('required') && ubicacionForm.get('pais')?.touched">
+                          <span><b>* El pais es obligatorio</b></span>
+                        </div>
+                    </div>
                         <div class="row mb-3">
                             <div class="col-sm-10 mx-auto">
                                 <button routerLink="/" class="btn btn-primary float-start rounded-pill">VOLVER</button>
