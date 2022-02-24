@@ -53,6 +53,22 @@
                           <span><b>* El pais es obligatorio</b></span>
                         </div>
                     </div>
+                    <div class="row mb-3">
+                      <div class="col-sm-10 mx-auto">
+                        <input id="latitud" class="form-control" formControlName="latitud" placeholder="Latitud">
+                      </div>
+                      <div class="text-danger" *ngIf="ubicacionForm.get('latitud')?.hasError('required') && ubicacionForm.get('latitud')?.touched">
+                        <span><b>* La latitud es obligatorio</b></span>
+                      </div>
+                    </div>
+                  <div class="row mb-3">
+                    <div class="col-sm-10 mx-auto">
+                      <input id="longitud" class="form-control" formControlName="longitud" placeholder="Longitud">
+                    </div>
+                    <div class="text-danger" *ngIf="ubicacionForm.get('longitud')?.hasError('required') && ubicacionForm.get('longitud')?.touched">
+                      <span><b>* La longitud es obligatorio</b></span>
+                    </div>
+                  </div>
                         <div class="row mb-3">
                             <div class="col-sm-10 mx-auto">
                                 <button routerLink="/" class="btn btn-primary float-start rounded-pill">VOLVER</button>

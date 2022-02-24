@@ -39,6 +39,8 @@ export class CrearUbicacionComponent implements OnInit {
       localidad: this.ubicacionForm.controls['localidad'].value,
       provincia: this.ubicacionForm.controls['provincia'].value,
       pais: this.ubicacionForm.controls['pais'].value,
+      latitud: this.ubicacionForm.controls['latitud'].value,
+      longitud: this.ubicacionForm.controls['longitud'].value,
     }
   }
 
@@ -99,7 +101,9 @@ export class CrearUbicacionComponent implements OnInit {
       direccion: " ",
       localidad: " ",
       provincia: " ",
-      pais: " "
+      pais: " ",
+      latitud: 0,
+      longitud: 0
     }
     this._ubicacionService.obtenerUbicacion(id).subscribe(data => {
       ubicacion.rubro= data.rubro,
@@ -107,7 +111,9 @@ export class CrearUbicacionComponent implements OnInit {
       ubicacion.direccion= data.direccion,
       ubicacion.localidad= data.localidad,
       ubicacion.provincia= data.provincia,
-      ubicacion.pais= data.pais
+      ubicacion.pais= data.pais,
+      ubicacion.latitud= data.latitud,
+      ubicacion.longitud= data.longitud
 
       this.ubicacionForm.setValue({
         rubro: data.rubro,
@@ -115,7 +121,9 @@ export class CrearUbicacionComponent implements OnInit {
         direccion: data.direccion,
         localidad: data.localidad,
         provincia: data.provincia,
-        pais: data.pais
+        pais: data.pais,
+        latitud: data.latitud,
+        longitud: data.longitud
       })
     }, error => {
       this.mensaje = error;
