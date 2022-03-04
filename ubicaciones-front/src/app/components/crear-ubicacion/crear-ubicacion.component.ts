@@ -28,6 +28,8 @@ export class CrearUbicacionComponent implements OnInit {
       localidad: ['', Validators.required],
       provincia: ['', Validators.required],
       pais: ['', Validators.required],
+      latitud: ['', Validators.required],
+      longitud: ['', Validators.required],
     })
     this.mensaje = " ";
     this.titulo_mensaje = " ";
