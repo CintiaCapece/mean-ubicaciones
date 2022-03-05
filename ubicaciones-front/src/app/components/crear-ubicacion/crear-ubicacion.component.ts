@@ -14,10 +14,9 @@ export class CrearUbicacionComponent implements OnInit {
   ubicacionForm: FormGroup;
   titulo = "Alta Ubicacion";
   boton = "INGRESAR";
-  id: string | null;
+  //id: string | null;
   mensaje: string;
   titulo_mensaje: string;
-  UBICACION: Ubicacion
 
   constructor(private fb: FormBuilder, private router: Router, private toastr: ToastrService, private _ubicacionService: UbicacionService,
     private aRouter: ActivatedRoute) {
@@ -31,10 +30,18 @@ export class CrearUbicacionComponent implements OnInit {
       latitud: ['', Validators.required],
       longitud: ['', Validators.required],
     })
+    console.log(this.ubicacionForm);
     this.mensaje = " ";
     this.titulo_mensaje = " ";
-    this.id = null;
-    this.UBICACION = {
+    //this.id = null;
+    //this.id = this.aRouter.snapshot.paramMap.get('id');
+  }
+
+  ngOnInit(): void {
+  }
+
+  procesarUbicacion(){
+    let UBICACION: Ubicacion = {
       rubro: this.ubicacionForm.controls['rubro'].value,
       nombre: this.ubicacionForm.controls['nombre'].value,
       direccion: this.ubicacionForm.controls['direccion'].value,
@@ -44,21 +51,17 @@ export class CrearUbicacionComponent implements OnInit {
       latitud: this.ubicacionForm.controls['latitud'].value,
       longitud: this.ubicacionForm.controls['longitud'].value,
     }
-  }
-
-  ngOnInit(): void {
-  }
-
-  procesarUbicacion(){
-    this.id = this.aRouter.snapshot.paramMap.get('id');
-    if(this.id !== null){
-      this.editarUbicacion(this.UBICACION);
+    let id = this.aRouter.snapshot.paramMap.get('id') || null;
+    console.log(this.aRouter.snapshot.paramMap.get('id'));
+    if(id != null){
+      this.editarUbicacion(UBICACION, id);
     }else{
-      this.agregarUbicacion(this.UBICACION);
+      this.agregarUbicacion(UBICACION);
     }
   }
 
   agregarUbicacion(ubicacion: Ubicacion){
+    
     this._ubicacionService.guardarUbicacion(ubicacion).subscribe(data => {
       this.mensaje = 'La ubicación fue registrada con éxito!';
       this.titulo_mensaje = 'Ubicación registrada!';
@@ -72,8 +75,8 @@ export class CrearUbicacionComponent implements OnInit {
     })
   }
 
-  editarUbicacion(ubicacion: Ubicacion){
-    if (this.id == null){
+  editarUbicacion(ubicacion: Ubicacion, id: string){
+    if (id == null){
       this.mensaje = 'No se reconoce la ubicacion';
       this.titulo_mensaje = 'Upps! Ocurrio un error';
       this.toastr.error(this.mensaje, this.titulo_mensaje);
@@ -82,7 +85,7 @@ export class CrearUbicacionComponent implements OnInit {
     } else {
       this.titulo = 'Editar Ubicacion';
       this.boton = 'MODIFICAR';
-      this._ubicacionService.editarUbicacion(this.id,ubicacion).subscribe(data => {
+      this._ubicacionService.editarUbicacion(id,ubicacion).subscribe(data => {
         this.mensaje = 'La ubicación fue actualizada con éxito!';
         this.titulo_mensaje = 'Ubicación actualizada!';
         this.toastr.info(this.mensaje, this.titulo_mensaje);
